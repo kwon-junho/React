@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Map, List } from 'immutable';
 import { Record } from 'immutable';
-
+ 
 // 1. 객체는 Map
 const obj = Map({
   foo: 1,

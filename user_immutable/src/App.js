@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import UserList from './UserList';
 import { Map, List, Record } from 'immutable';
-
+ 
 const User = Record({
   id: null,
   username: null
