@@ -33,9 +33,10 @@ mongoose.connect(
 
 
 app.get('/', (req, res) => {
+  console.log('Cookies:',req.cookies);
   res.send('Hello, Express! start ')
 })
-
+app.use(cookieParser());
 app.get('/api/users/auth', auth, (req, res) => {
   //여기 까지 미들웨어를 통과해 왔다는 얘기는  Authentication 이 True 라는 말.
   res.status(200).json({
@@ -50,10 +51,10 @@ app.get('/api/users/auth', auth, (req, res) => {
   })
 })
 
-app.post('/register', async (req, res) => {
+app.post('/api/users/register', async (req, res) => {
   const user = new User(req.body);
   console.log(req.body);
-  const result = await user.save().then(()=>{
+  await user.save().then(()=>{
     res.status(200).json({
       success: true
     })
@@ -69,7 +70,7 @@ app.post('/register', async (req, res) => {
   // })
 })
 
-app.post('/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
   User.findOne({email: req.body.email})
   .then(userInfo => {
     if(!userInfo){
@@ -82,8 +83,12 @@ app.post('/login', (req, res) => {
     userInfo.comparePassowrd(req.body.password, (err, isMatch) => {
       if (!isMatch) return res.json({ loginSuccess: false, message: "비밀번호가 일치하지 않습니다." });
       // 비밀번호까지 일치하다면 해당 유저 Token 생성.
-      const token = userInfo.generateToken()
-      res.cookie("x_auth", token).status(200).json({ loginSuccess: true, userId: userInfo._id })
+      // userInfo.generateToken((err, user) => {
+        
+        // })
+        const token = userInfo.generateToken()
+          console.log("tlogin-oken:",token);
+     res.cookie("x_auth", token).status(200).json({ loginSuccess: true, userId: userInfo._id })
 
     })
   })
@@ -113,9 +118,12 @@ app.post('/login', (req, res) => {
   // }
 })
 
-app.get('/api/users/logout', auth, async (req, res) => {
-  console.log("req.user._id:",req.user._id);
-  const result = await User.findOneAndUpdate({_id: req.user._id}, {token: ""}).then(()=>{
+app.get('/api/users/logout',  auth, async (req, res) => {
+  console.log("req.user._id:",req.user);
+  // await User.findOneAndUpdate({_id: req.user._id}, {token: ""}, { new: true }).then(()=>{
+    await User.findOne({_id: req.user._id}).then(()=>{
+    res.cookie("x_auth", "")
+    res.status = 204;  
     res.status(200).json({
       success: true
     })
