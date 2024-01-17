@@ -25,7 +25,7 @@ const db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', () => { console.log('Connected to mongodb server'); });
 // mongoose.connect('mongodb://username:password@host:port/database=');
-mongoose.connect('mongodb+srv://kwon:awZ8ngJxY1bE8lrb@react-mongodb.ayyfgbs.mongodb.net/?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://');
 // mongoose.connection.on('connected', function() {
 //     // Hack the database back to the right one, because when using mongodb+srv as protocol.
 //     if (mongoose.connection.client.s.url.startsWith('mongodb+srv')) {
