@@ -28,7 +28,7 @@ db.once('open', () => { console.log('Connected to mongodb server'); });
 // mongoose.connect('mongodb://localhost/codelab');
 mongoose
   .connect(//이 부분은 본인에게 맞게 설정 하세요
-    "mongodb+srv://kwon:awZ8ngJxY1bE8lrb@react-mongodb.ayyfgbs.mongodb.net/?retryWrites=true&w=majority"
+
     //"mongodb+srv://kwon:awZ8ngJxY1bE8lrb@react-mongodb.ayyfgbs.mongodb.net/"
   );
   //.then(() => console.log("MongoDB connected..."))
